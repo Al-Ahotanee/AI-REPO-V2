@@ -1,0 +1,30 @@
+{
+  "name": "GSU Faculty Repository",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+
+  "forwardPorts": [5000],
+  "portsAttributes": {
+    "5000": {
+      "label": "GSU Faculty Repository",
+      "onAutoForward": "openBrowser",
+      "visibility": "public"
+    }
+  },
+
+  "postCreateCommand": "pip install -r requirements.txt",
+
+  "postStartCommand": "python app.py",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.pylint"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  }
+}
