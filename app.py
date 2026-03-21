@@ -7,7 +7,8 @@
 """
 
 import os, json, re, math, uuid, logging, threading
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+def _utcnow(): return datetime.now(timezone.utc)
 from functools import wraps
 from pathlib import Path
 from collections import defaultdict
@@ -43,7 +44,7 @@ except Exception as _e:
 BASE_DIR   = Path(__file__).parent
 UPLOAD_DIR = Path(os.environ.get("UPLOAD_DIR", str(BASE_DIR / "uploads")))
 DB_PATH    = Path(os.environ.get("DB_PATH",    str(BASE_DIR / "repository.db")))
-SECRET     = os.environ.get("SECRET_KEY", "gsu-repo-change-in-prod-2024")
+SECRET     = os.environ.get("SECRET_KEY", "gsu-faculty-repo-secret-key-2024!!")
 JWT_DAYS   = int(os.environ.get("JWT_DAYS", 7))
 MAX_BYTES  = int(os.environ.get("MAX_MB", 50)) * 1024 * 1024
 PORT       = int(os.environ.get("PORT", 5000))
@@ -151,8 +152,8 @@ def init_db():
 # ── auth helpers ──────────────────────────────────────────────────────────────
 def make_token(uid, role):
     t = jwt.encode({"sub":uid,"role":role,
-                    "exp": datetime.utcnow()+timedelta(days=JWT_DAYS),
-                    "iat": datetime.utcnow()}, SECRET, algorithm="HS256")
+                    "exp": _utcnow()+timedelta(days=JWT_DAYS),
+                    "iat": _utcnow()}, SECRET, algorithm="HS256")
     return t if isinstance(t, str) else t.decode()
 
 def require_auth(f):
@@ -383,7 +384,7 @@ def health():
     return jsonify({"status":"ok","ai":"sentence-transformers" if HAS_ST else "tfidf",
                     "documents":db.execute("SELECT COUNT(*) FROM documents").fetchone()[0],
                     "users":db.execute("SELECT COUNT(*) FROM users").fetchone()[0],
-                    "timestamp":datetime.utcnow().isoformat()})
+                    "timestamp":_utcnow().isoformat()})
 
 # Auth
 @app.route("/api/auth/register",methods=["POST"])
