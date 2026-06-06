@@ -291,4 +291,4 @@ For any of these, the `app.py` and `index.html` need **zero changes** — just u
 
 ---
 
-*SLU Faculty Repository · Department of Computer Science · Gombe State University*
+*SLU Faculty Repository · Department of Computer Science · Kafin Hausa State University*

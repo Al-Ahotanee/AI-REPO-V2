@@ -1,7 +1,7 @@
 """
 ╔══════════════════════════════════════════════════════════════════════╗
 ║   AI-Powered Faculty Repository System                              ║
-║   Gombe State University · Dept. of Computer Science               ║
+║   Kafin Hausa State University · Dept. of Computer Science         ║
 ║   Stack: Flask + SQLite + React 18 + Tailwind CSS + Lucide Icons   ║
 ╚══════════════════════════════════════════════════════════════════════╝
 """
