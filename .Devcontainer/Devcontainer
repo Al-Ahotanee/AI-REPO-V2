@@ -1,11 +1,11 @@
 {
-  "name": "GSU Faculty Repository",
+  "name": "SLU Faculty Repository",
   "image": "mcr.microsoft.com/devcontainers/python:3.11",
 
   "forwardPorts": [5000],
   "portsAttributes": {
     "5000": {
-      "label": "GSU Faculty Repository",
+      "label": "SLU Faculty Repository",
       "onAutoForward": "openBrowser",
       "visibility": "public"
     }

@@ -44,7 +44,7 @@ except Exception as _e:
 BASE_DIR   = Path(__file__).parent
 UPLOAD_DIR = Path(os.environ.get("UPLOAD_DIR", str(BASE_DIR / "uploads")))
 DB_PATH    = Path(os.environ.get("DB_PATH",    str(BASE_DIR / "repository.db")))
-SECRET     = os.environ.get("SECRET_KEY", "gsu-faculty-repo-secret-key-2024!!")
+SECRET     = os.environ.get("SECRET_KEY", "slu-faculty-repo-secret-key-2024!!")
 JWT_DAYS   = int(os.environ.get("JWT_DAYS", 7))
 MAX_BYTES  = int(os.environ.get("MAX_MB", 50)) * 1024 * 1024
 PORT       = int(os.environ.get("PORT", 5000))
@@ -53,7 +53,7 @@ ALLOWED    = {".pdf",".docx",".pptx",".txt",".xlsx",".png",".jpg",".jpeg"}
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 logging.basicConfig(level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s")
-log = logging.getLogger("GSURepo")
+log = logging.getLogger("SLURepo")
 
 app = Flask(__name__, static_folder=str(BASE_DIR), static_url_path="")
 app.config["MAX_CONTENT_LENGTH"] = MAX_BYTES
@@ -145,9 +145,9 @@ def init_db():
         if not db.execute("SELECT id FROM users WHERE role='admin' LIMIT 1").fetchone():
             pw = bcrypt.hashpw(b"Admin@1234", bcrypt.gensalt()).decode()
             db.execute("INSERT INTO users (name,email,password,role,department) VALUES (?,?,?,?,?)",
-                       ("System Admin","admin@gsu.edu.ng", pw,"admin","Computer Science"))
+                       ("System Admin","admin@slu.edu.ng", pw,"admin","Computer Science"))
             db.commit()
-            log.info("Default admin: admin@gsu.edu.ng / Admin@1234")
+            log.info("Default admin: admin@slu.edu.ng / Admin@1234")
 
 # ── auth helpers ──────────────────────────────────────────────────────────────
 def make_token(uid, role):
@@ -734,5 +734,5 @@ def activity():
 
 if __name__ == "__main__":
     init_db()
-    log.info(f"GSU Repo starting on port {PORT} | AI={'ST' if HAS_ST else 'TFIDF'}")
+    log.info(f"SLU Repo starting on port {PORT} | AI={'ST' if HAS_ST else 'TFIDF'}")
     app.run(host="0.0.0.0", port=PORT, debug=False)

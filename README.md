@@ -1,4 +1,4 @@
-# 🎓 GSU Faculty Repository — GitHub Codespaces Guide
+# 🎓 SLU Faculty Repository — GitHub Codespaces Guide
 
 **Stack:** Flask + SQLite + React 18 + Tailwind CSS + Lucide Icons  
 **Hosting:** GitHub Codespaces (Free tier: 60 hrs/month · 15 GB storage)
@@ -28,7 +28,7 @@ your-repo/
 
 1. Go to **github.com** → click **New** (top-left green button)
 2. Fill in:
-   - **Repository name:** `gsu-faculty-repo` (or anything you like)
+  - **Repository name:** `slu-faculty-repo` (or anything you like)
    - **Visibility:** `Private` (recommended) or `Public`
    - ✅ Check **"Add a README file"** (so the repo isn't empty)
 3. Click **Create repository**
@@ -56,8 +56,8 @@ You have two options:
 #### Option B — Git command line
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/gsu-faculty-repo.git
-cd gsu-faculty-repo
+git clone https://github.com/YOUR_USERNAME/slu-faculty-repo.git
+cd slu-faculty-repo
 
 # Copy your files here
 cp /path/to/app.py .
@@ -67,7 +67,7 @@ mkdir -p .devcontainer
 cp /path/to/devcontainer.json .devcontainer/
 
 git add .
-git commit -m "Add GSU Faculty Repository"
+git commit -m "Add SLU Faculty Repository"
 git push
 ```
 
@@ -124,7 +124,7 @@ Open the app URL and log in with the default admin:
 
 | Field | Value |
 |---|---|
-| Email | `admin@gsu.edu.ng` |
+| Email | `admin@slu.edu.ng` |
 | Password | `Admin@1234` |
 
 > ⚠️ Change this password immediately in **Profile → Change Password**
@@ -291,4 +291,4 @@ For any of these, the `app.py` and `index.html` need **zero changes** — just u
 
 ---
 
-*GSU Faculty Repository · Department of Computer Science · Gombe State University*
+*SLU Faculty Repository · Department of Computer Science · Gombe State University*
