@@ -1608,7 +1608,7 @@ function AdminActivity() {
 /* ═══════════════════════════════════════════════════════════════════════════
    LANDING / MARKETING SECTION
 ═══════════════════════════════════════════════════════════════════════════ */
-function Landing() {
+function Landing({onSignIn}) {
   return (
     <header className="bg-gradient-to-r from-brand-700 to-brand-500 text-white">
       <div className="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
@@ -1620,7 +1620,7 @@ function Landing() {
           <a href="#hero" className="hover:underline">Home</a>
           <a href="#features" className="hover:underline">Features</a>
           <a href="#about" className="hover:underline">About</a>
-          <button onClick={()=>window.scrollTo({top:document.getElementById('root')?.offsetTop||0,behavior:'smooth'})}
+          <button onClick={()=>onSignIn && onSignIn()}
             className="ml-4 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg">Sign In</button>
         </nav>
       </div>
@@ -1631,7 +1631,7 @@ function Landing() {
             <h1 className="text-4xl md:text-5xl font-bold text-slate-900">A modern knowledge hub for faculty</h1>
             <p className="mt-4 text-slate-600 max-w-xl">Secure, AI-powered repository designed for research and teaching — fast uploads, semantic search, smart recommendations, and team collaboration.</p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <button onClick={()=>window.scrollTo({top:document.getElementById('root')?.offsetTop||0,behavior:'smooth'})}
+              <button onClick={()=>onSignIn && onSignIn(
                 className="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white font-semibold px-6 py-3 rounded-lg">Get Started</button>
               <a href="#features" className="inline-flex items-center gap-2 text-slate-700 px-5 py-3 rounded-lg border border-slate-200">Learn More</a>
             </div>
@@ -1710,6 +1710,7 @@ function App() {
   const [page, setPage]       = useState("dashboard");
   const [toasts, setToasts]   = useState([]);
   const [sidebarOpen,setSidebar]=useState(false);
+  const [showAuth, setShowAuth] = useState(false);
 
   const toast = (msg, type="info") => {
     const id = Date.now();
@@ -1720,15 +1721,12 @@ function App() {
   const logout = () => {
     localStorage.removeItem("slu_token");
     localStorage.removeItem("slu_user");
-    setUser(null); setPage("dashboard");
+    setUser(null); setPage("dashboard"); setShowAuth(false);
   };
 
-  if (!user) return (
-    <AppCtx.Provider value={{toast,user,setUser}}>
-      <AuthPage onLogin={u=>{setUser(u);setPage("dashboard");}}/>
-      <ToastContainer toasts={toasts}/>
-    </AppCtx.Provider>
-  );
+  // previously the app returned the AuthPage immediately when no user was present.
+  // we now render the Landing for public visitors and show AuthPage as a modal when requested.
+
 
   // Parse page
   let currentPage=page, docId=null, authorFilter=null;
@@ -1755,7 +1753,15 @@ function App() {
 
   return (
     <AppCtx.Provider value={{toast,user,setUser}}>
-      {!user && <Landing />}
+      {!user && <Landing onSignIn={()=>setShowAuth(true)}/>} 
+      {showAuth && !user && (
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-md">
+            <AuthPage onLogin={u=>{setUser(u);setPage("dashboard");setShowAuth(false);}}/>
+          </div>
+        </div>
+      )}
+
       <div className="flex min-h-screen overflow-hidden bg-slate-50">
         {/* Mobile overlay */}
         {sidebarOpen && (
