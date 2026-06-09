@@ -56,6 +56,8 @@ logging.basicConfig(level=logging.INFO,
 log = logging.getLogger("SLURepo")
 
 app = Flask(__name__, static_folder=str(BASE_DIR), static_url_path="")
+with app.app_context():
+    init_db()
 app.config["MAX_CONTENT_LENGTH"] = MAX_BYTES
 CORS(app, resources={r"/api/*": {"origins": "*"}},
      supports_credentials=True,
